@@ -190,7 +190,7 @@ jobs:
 
     # Nuget パッケージを復元
     - name: Restore NuGet packages
-      run: nuget restore Aul2Dll3.sln
+      run: nuget restore $env:SOLUTION_NAME.sln
 
     # ビルド
     - name: Build project with MSBuild
@@ -199,22 +199,16 @@ jobs:
         $env:OPENCV_RELEASE_LIB = "$env:WORKSPACE\opencv\build\install\$env:ARCH\vc17\staticlib"
         $env:OPENCV_DEBUG_LIB = "$env:WORKSPACE\opencv\build\install\$env:ARCH\vc17\staticlib"
         $env:AVIUTL2_PLUGIN_OUT_DIR = "$env:WORKSPACE\"
-        msbuild Aul2Dll3.sln /m /p:Configuration=$env:BUILD_TYPE /p:Platform=$env:ARCH
+        msbuild $env:SOLUTION_NAME.sln /m /p:Configuration=$env:BUILD_TYPE /p:Platform=$env:ARCH
 
     - name: Create archive
       run: |
         mkdir ${SOLUTION_NAME}_model
         mv ${WORKSPACE}/Depth-Anything-V2/model/depth_anything_v2_vits.onnx ${SOLUTION_NAME}_model/.
-        7z a ${SOLUTION_NAME}_${VERSION}.zip Aul2Dll3.auf2 Microsoft.WindowsAppRuntime.Bootstrap.dll ${SOLUTION_NAME}_model README.md LICENSE.txt
+        7z a ${SOLUTION_NAME}_${VERSION}.zip ${SOLUTION_NAME}.auf2 Microsoft.WindowsAppRuntime.Bootstrap.dll ${SOLUTION_NAME}_model README.md LICENSE.txt ThirdPartyNotices.md
       shell: bash
       env:
         VERSION: ${{github.ref_name}}
-
-    # - name: Save Artifact
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: my-artifact
-    #     path: ${{github.workspace}}/${{env.SOLUTION_NAME}}.zip
 
     - name: Create release notes
       run: gh release create "${VERSION}" --generate-notes "${{github.workspace}}/*.zip"
