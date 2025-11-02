@@ -52,7 +52,7 @@ Image by <a href="https://pixabay.com/users/anselmo7511-43046719/?utm_source=lin
 
 ## ライセンス
 
-[MIT Lisence](LICENSE.txt) に基づくものとします。
+[MIT License](LICENSE.txt) に基づくものとします。
 
 ## クレジット
 
