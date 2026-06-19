@@ -1,0 +1,13 @@
+[project]
+name = "da2-onnx"
+version = "0.1.0"
+description = "ONNX conversion for Depth Anything V2"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "torchvision",
+    "onnx",
+    "onnxscript",
+    "opencv-python"
+]

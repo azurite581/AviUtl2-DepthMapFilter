@@ -13,7 +13,7 @@ model_configs = {
 encoder = 'vits'
 
 model = DepthAnythingV2(**model_configs[encoder])
-model.load_state_dict(torch.load(f'./checkpoints/depth_anything_v2_{encoder}.pth', map_location='cpu'))
+model.load_state_dict(torch.load(f'./external/checkpoints/depth_anything_v2_{encoder}.pth', map_location='cpu'))
 model = model.to(DEVICE).eval()
 
 torch.onnx.export(
@@ -22,5 +22,6 @@ torch.onnx.export(
     './model/depth_anything_v2_vits.onnx',
     input_names=["image"],
     output_names=["depth"],
-    opset_version=17,
+    opset_version=19,
+    external_data=False,
 )

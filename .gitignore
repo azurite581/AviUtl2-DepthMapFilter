@@ -361,3 +361,19 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# VSCode Settings
+.vscode/
+
+# python
+.venv/
+python/external/
+python/model/
+
+# Build
+opencv_build/
+out/
+
+# AviUtl2 CLI
+/.aviutl2-cli
+/release
