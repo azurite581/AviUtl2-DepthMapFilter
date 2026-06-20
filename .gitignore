@@ -367,7 +367,8 @@ FodyWeavers.xsd
 
 # python
 .venv/
-python/external/
+python/external/Depth-Anything-V2/
+python/external/checkpoints/
 python/model/
 
 # Build
