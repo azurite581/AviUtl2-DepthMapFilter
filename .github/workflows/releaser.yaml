@@ -32,8 +32,6 @@ jobs:
 
     - name: Build project
       run: |
-        mise run build_opencv
-        mise run export_onnx
         mise run build
       env:
         PYTHONUTF8: 1

@@ -14,4 +14,5 @@ description = "Export Depth-Anything-V2 ONNX model"
 run = "pwsh -ExecutionPolicy Bypass -File ./tools/onnx_export.ps1"
 
 [tasks.build]
+depends = ["build_opencv", "export_onnx"]
 run = "au2 prepare && au2 release"

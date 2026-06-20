@@ -37,6 +37,9 @@ $cmakeArgs = @(
     "-DENABLE_LTO=ON",
     "-DWITH_IPP=OFF",
 
+    # Parallel processing
+    "-DWITH_PTHREADS_PF=OFF",
+
     # Disable unnecessary backends
     "-DWITH_FFMPEG=OFF",
     "-DWITH_GSTREAMER=OFF",
@@ -67,8 +70,8 @@ cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "=== Build OpenCV ==="
-cmake --build $OPENCV_BUILD --parallel 4 --config Debug
-cmake --build $OPENCV_BUILD --parallel 4 --config Release
+cmake --build $OPENCV_BUILD --parallel --config Debug
+cmake --build $OPENCV_BUILD --parallel --config Release
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "=== Install OpenCV ==="
