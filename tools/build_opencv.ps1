@@ -57,14 +57,18 @@ $cmakeArgs = @(
     "-DBUILD_WEBP=ON",
     "-DBUILD_OPENJPEG=ON",
 
+    # Others
+    "-DBUILD_JAVA=OFF",
+    "-DBUILD_FAT_JAVA_LIB=OFF",
+    "-DBUILD_opencv_python3=OFF",
     "-DINSTALL_CREATE_DISTRIB=ON"
 )
 cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "=== Build OpenCV ==="
-cmake --build $OPENCV_BUILD --parallel 2 --config Debug
-cmake --build $OPENCV_BUILD --parallel 2 --config Release
+cmake --build $OPENCV_BUILD --parallel 4 --config Debug
+cmake --build $OPENCV_BUILD --parallel 4 --config Release
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "=== Install OpenCV ==="
