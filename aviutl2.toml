@@ -3,7 +3,7 @@
 [project]
 id = "depth-map-filter"
 name = "DepthMapFilter"
-version = "1.0.0"
+version = "1.1.0"
 
 [development]
 aviutl2_version = "latest"
@@ -26,3 +26,12 @@ destination = "Plugin/DepthMapFilter/onnxruntime.dll"
 [artifacts.depth_map_filter-depth-anything-v2-onnx]
 source = "./python/model/depth_anything_v2_vits.onnx"
 destination = "Plugin/DepthMapFilter/depth_anything_v2_vits.onnx"
+
+[preview]
+
+[release]
+package_template = "package.txt"
+profile = "release"
+output_dir = "release"
+zip_name = "{name}-v{version}"
+

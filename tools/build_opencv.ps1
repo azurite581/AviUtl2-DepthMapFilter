@@ -7,6 +7,10 @@ Write-Host "==== Path settings ===="
 $OPENCV_SRC = "third_party\opencv"
 $OPENCV_BUILD = "opencv_build\opencv"
 
+if (-not (Test-Path $OPENCV_SRC)) {
+    throw "OpenCV source directory not found: $OPENCV_SRC"
+}
+
 Write-Host "=== Configure OpenCV ==="
 # Configuration options reference:
 # https://docs.opencv.org/5.0/tutorials/introduction/config_reference/config_reference.html
@@ -39,7 +43,7 @@ $cmakeArgs = @(
     "-DWITH_GTK=OFF",
     "-DWITH_QT=OFF",
     "-DWITH_WIN32UI=OFF",
-    "-DWITH_ANDROID_MEDIANDK=DFF",
+    "-DWITH_ANDROID_MEDIANDK=OFF",
 
     # DNN
     "-DWITH_ONNXRUNTIME=ON",

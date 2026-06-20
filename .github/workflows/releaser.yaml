@@ -6,213 +6,38 @@ on:
     tags:
     - "v[0-9]+.[0-9]+.[0-9]+"
 
-env:
-  SOLUTION_NAME: DepthMapFilter
-  OPENCV_VERSION: 4.12.0
-
 jobs:
-  export_model:
-    name: Export_Model
+  release_project:
+    name: Release project
     runs-on: windows-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
-
-    - name: Set Up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
-
-    # キャッシュからモデルを復元
-    - name: Restore model
-      id: cache-restore-depth-anything-v2
-      uses: actions/cache/restore@v4
-      with:
-        path: ${{github.workspace}}/Depth-Anything-V2/model
-        key: Depth-Anything-V2-${{runner.os}}
-
-    # モデルが無かった場合にのみインストール
-    - name: Install Depth Anything V2
-      if: steps.cache-restore-depth-anything-v2.outputs.cache-hit != 'true'
-      run: git clone https://github.com/DepthAnything/Depth-Anything-V2.git
-
-    - name: Install pre-trained models
-      if: steps.cache-restore-depth-anything-v2.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p Depth-Anything-V2/checkpoints
-        Invoke-WebRequest https://huggingface.co/depth-anything/Depth-Anything-V2-Small/resolve/main/depth_anything_v2_vits.pth -OutFile Depth-Anything-V2/checkpoints/depth_anything_v2_vits.pth
-
-    - name: Install dependencies
-      if: steps.cache-restore-depth-anything-v2.outputs.cache-hit != 'true'
-      run: |
-        pip install torch==2.8.0 torchvision==0.23.0
-        pip install --upgrade onnx onnxscript
-        pip install opencv-python
-
-    # ONNXにエクスポート
-    - name: Export to ONNX
-      if: steps.cache-restore-depth-anything-v2.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p Depth-Anything-V2/model
-        mv python/export.py Depth-Anything-V2
-        cd Depth-Anything-V2
-        python export.py
-
-    # モデルを保存
-    - name: Cache model
-      if: steps.cache-restore-depth-anything-v2.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
-      with:
-        path: ${{github.workspace}}/Depth-Anything-V2/model
-        key: Depth-Anything-V2-${{runner.os}}
-
-  build_opencv:
-    name: Build_OpenCV
-    runs-on: windows-latest
-    env:
-      ARCH: x64
-      BUILD_TYPE: Release
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
-
-    # OpenCVのキャッシュを復元
-    - name: Restore OpenCV
-      id: cache-restore-opencv
-      uses: actions/cache/restore@v4
-      with:
-        path: ${{github.workspace}}/opencv/build/install
-        key: OpenCV-${{env.OPENCV_VERSION}}-${{env.ARCH}}-${{runner.os}}-${{env.BUILD_TYPE}}
-
-    # キャッシュが無かった場合にのみビルド
-    - name: Clone OpenCV source
-      if: steps.cache-restore-opencv.outputs.cache-hit != 'true'
-      run: git clone https://github.com/opencv/opencv.git -b $env:OPENCV_VERSION --depth 1
-
-    - name: Build and Install
-      if: steps.cache-restore-opencv.outputs.cache-hit != 'true'
-      run: |
-        mkdir -p opencv/build
-        cd opencv/build
-        cmake .. \
-              -G "Visual Studio 17 2022" \
-              -A x64 \
-              -D BUILD_SHARED_LIBS=OFF \
-              -D BUILD_TESTS=OFF \
-              -D BUILD_PREF_TESTS=OFF \
-              -D BUILD_EXAMPLES=OFF \
-              -D BUILD_opencv_apps=OFF \
-              -D BUILD_JAVA=OFF \
-              -D BUILD_opencv_java_bindings_generator=OFF \
-              -D BUILD_opencv_js_bindings_generator=OFF \
-              -D BUILD_opencv_objc_bindings_generator=OFF \
-              -D BUILD_opencv_python3=OFF \
-              -D BUILD_opencv_python_bindings_generator=OFF \
-              -D BUILD_opencv_python_tests=OFF \
-              -D BUILD_opencv_world=OFF \
-              -D BUILD_WITH_STATIC_CRT=ON \
-              -D WITH_GDAL=OFF \
-              -D WITH_PNG=OFF \
-              -D WITH_JPEG=OFF \
-              -D WITH_OPENJPEG=OFF \
-              -D WITH_JASPER=OFF \
-              -D WITH_TIFF=OFF \
-              -D WITH_WEBP=OFF \
-              -D WITH_OPENEXR=OFF \
-              -D WITH_JPEGXL=OFF \
-              -D WITH_V4L=OFF \
-              -D WITH_IMGCODEC_GIF=OFF \
-              -D WITH_IMGCODEC_HDR=OFF \
-              -D WITH_IMGCODEC_PFM=OFF \
-              -D WITH_IMGCODEC_PXM=OFF \
-              -D WITH_IMGCODEC_SUNRASTER=OFF \
-              -D WITH_FFMPEG=OFF \
-              -D WITH_GSTREAMER=OFF \
-              -D WITH_MSMF=OFF \
-              -D WITH_DSHOW=OFF \
-              -D WITH_AVFOUNDATION=OFF \
-              -D WITH_ANDROID_MEDIANDK=OFF \
-              -D WITH_WIN32UI=OFF
-        cmake --build . --config ${BUILD_TYPE} --parallel
-        cmake --install .
-      shell: bash
-
-    # キャッシュを保存
-    - name: Cache OpenCV
-      if: steps.cache-restore-opencv.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
-      with:
-        path: ${{github.workspace}}/opencv/build/install
-        key: OpenCV-${{env.OPENCV_VERSION}}-${{env.ARCH}}-${{runner.os}}-${{env.BUILD_TYPE}}
-
-  build_project:
-    name: Build_Project
-    runs-on: windows-latest
-    needs: [export_model, build_opencv]
-    env:
-      ARCH: x64
-      BUILD_TYPE: Release
-      WORKSPACE: ${{github.workspace}}
-
     permissions:
       contents: write
-
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v5
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       with:
-        fetch-depth: 0
+        submodules: recursive
 
-    # モデルを復元
-    - name: Restore model
-      uses: actions/cache/restore@v4
-      with:
-        path: ${{github.workspace}}/Depth-Anything-V2/model
-        key: Depth-Anything-V2-${{runner.os}}
+    - name: Setup mise
+      uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
 
-    # OpenCVを復元
-    - name: Restore OpenCV
-      uses: actions/cache/restore@v4
-      with:
-        path: ${{github.workspace}}/opencv/build/install
-        key: OpenCV-${{env.OPENCV_VERSION}}-${{env.ARCH}}-${{runner.os}}-${{env.BUILD_TYPE}}
-
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
-      with:
-        msbuild-architecture: x64
-
-    # Nuget パッケージを復元
-    - name: Restore NuGet packages
-      run: nuget restore $env:SOLUTION_NAME.sln
-
-    # ビルド
-    - name: Build project with MSBuild
+    # タグから 'v' を取り除いたものを変数に保存
+    - name: Extract version
+      id: extract-version
       run: |
-        $env:OPENCV_INCLUDE = "$env:WORKSPACE\opencv\build\install\include"
-        $env:OPENCV_RELEASE_LIB = "$env:WORKSPACE\opencv\build\install\$env:ARCH\vc17\staticlib"
-        $env:OPENCV_DEBUG_LIB = "$env:WORKSPACE\opencv\build\install\$env:ARCH\vc17\staticlib"
-        $env:AVIUTL2_PLUGIN_OUT_DIR = "$env:WORKSPACE\"
-        msbuild $env:SOLUTION_NAME.sln /m /p:Configuration=$env:BUILD_TYPE /p:Platform=$env:ARCH
+        $version = "$env:GITHUB_REF_NAME".TrimStart('v')
+        echo "version=$version" >> $env:GITHUB_OUTPUT
 
-    - name: Create archive
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+    - name: Build project
       run: |
-        mkdir ${SOLUTION_NAME}_model
-        mv ${WORKSPACE}/Depth-Anything-V2/model/depth_anything_v2_vits.onnx ${SOLUTION_NAME}_model/.
-        7z a ${SOLUTION_NAME}_${VERSION}.zip ${SOLUTION_NAME}.auf2 Microsoft.WindowsAppRuntime.Bootstrap.dll ${SOLUTION_NAME}_model README.md LICENSE.txt ThirdPartyNotices.md
-      shell: bash
-      env:
-        VERSION: ${{github.ref_name}}
+        mise run build
 
     - name: Create release notes
-      run: gh release create "${VERSION}" --generate-notes "${{github.workspace}}/*.zip"
-      shell: bash
+      run: |
+        dotnet .\tools\ChangelogExtract.cs -- .\CHANGELOG.md .\EXTRACTED.md --semver "$env:VERSION"
+        Move-Item -Path "release\*.au2pkg.zip" -Destination .\
+        gh release create "v$env:VERSION" --notes-file EXTRACTED.md "*.au2pkg.zip"
       env:
-        VERSION: ${{github.ref_name}}
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        VERSION: ${{ steps.extract-version.outputs.version }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
