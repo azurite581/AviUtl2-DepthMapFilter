@@ -1,0 +1,23 @@
+[tools]
+cmake = "latest"
+"github:sevenc-nanashi/aviutl2-cli" = { version = "latest", bin = "au2.exe" }
+uv = "latest"
+ninja = "latest"
+python = "3.14"
+
+[tasks.build_opencv]
+description = "Build OpenCV"
+run = "pwsh -ExecutionPolicy Bypass -File ./tools/build_opencv.ps1"
+
+[tasks.export_onnx]
+description = "Export Depth-Anything-V2 ONNX model"
+run = "pwsh -ExecutionPolicy Bypass -File ./tools/onnx_export.ps1"
+
+[tasks.pre-build]
+run = [
+  { tasks = ["build_opencv", "export_onnx"] }  # run parallel
+]
+
+[tasks.build]
+depends = "pre-build"
+run = "au2 prepare && au2 release"

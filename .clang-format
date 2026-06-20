@@ -1,0 +1,9 @@
+BasedOnStyle: Google
+ColumnLimit: 0
+IndentWidth: 4
+AccessModifierOffset: -4
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+AlignConsecutiveAssignments: Consecutive
+AlignTrailingComments: true

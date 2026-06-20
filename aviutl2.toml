@@ -1,0 +1,37 @@
+#:schema ./.aviutl2-cli/aviutl2.schema.json
+# 設定ファイルについては https://github.com/sevenc-nanashi/aviutl2-cli を参照してください。
+[project]
+id = "depth-map-filter"
+name = "DepthMapFilter"
+version = "1.1.0"
+
+[development]
+aviutl2_version = "latest"
+
+[artifacts.depth_map_filter-auf2]
+destination = "Plugin/DepthMapFilter/DepthMapFilter.auf2"
+
+[artifacts.depth_map_filter-auf2.profiles.debug]
+build = "cmake --workflow debug-flow"
+source = "./out/build/windows-x64/Debug/DepthMapFilter.auf2"
+
+[artifacts.depth_map_filter-auf2.profiles.release]
+build = "cmake --workflow release-flow"
+source = "./out/build/windows-x64/Release/DepthMapFilter.auf2"
+
+[artifacts.depth_map_filter-onnxruntime]
+source = "./opencv_build/opencv/install/x64/vc18/bin/onnxruntime.dll"
+destination = "Plugin/DepthMapFilter/onnxruntime.dll"
+
+[artifacts.depth_map_filter-depth-anything-v2-onnx]
+source = "./python/model/depth_anything_v2_vits.onnx"
+destination = "Plugin/DepthMapFilter/depth_anything_v2_vits.onnx"
+
+[preview]
+
+[release]
+package_template = "package.txt"
+profile = "release"
+output_dir = "release"
+zip_name = "{name}-v{version}"
+
