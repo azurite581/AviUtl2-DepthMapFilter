@@ -63,8 +63,8 @@ cmake @cmakeArgs
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "=== Build OpenCV ==="
-cmake --build $OPENCV_BUILD --parallel --config Debug
-cmake --build $OPENCV_BUILD --parallel --config Release
+cmake --build $OPENCV_BUILD --parallel 2 --config Debug
+cmake --build $OPENCV_BUILD --parallel 2 --config Release
 if ($LASTEXITCODE -ne 0) { exit 1 }
 
 Write-Host "=== Install OpenCV ==="
