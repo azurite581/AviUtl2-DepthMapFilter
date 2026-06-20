@@ -50,7 +50,7 @@ $cmakeArgs = @(
 
     # DNN
     "-DWITH_ONNXRUNTIME=ON",
-    "-DDOWNLOAD_ONNXRUNTIME_GPU=ON",
+    "-DOWNLOAD_ONNXRUNTIME=ON",
 
     # Codec
     "-DBUILD_ZLIB=ON",
