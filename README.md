@@ -1,5 +1,14 @@
 # AviUtl2 DepthMapFilter
 
+<img src="https://img.shields.io/github/license/azurite581/AviUtl2-DepthMapFilter">
+<a href="https://github.com/azurite581/AviUtl2-DepthMapFilter/releases/latest" style="text-decoration: none;">
+<img src="https://img.shields.io/github/v/release/azurite581/AviUtl2-DepthMapFilter">
+</a>
+<a href="https://github.com/azurite581/AviUtl2-DepthMapFilter/releases/latest" style="text-decoration: none;">
+<img src="https://img.shields.io/github/downloads/azurite581/AviUtl2-DepthMapFilter/total">
+</a>
+<img src="https://img.shields.io/github/last-commit/azurite581/AviUtl2-DepthMapFilter">
+
 [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) を使って深度マップを生成する [AviUtl2](https://spring-fragrance.mints.ne.jp/aviutl/) のフィルタープラグインです。
 
 ![DepthMapFilter](assets/DepthMapFilter.png)
@@ -37,10 +46,10 @@ v1.0.0 では `aviutl2.exe` と同階層のフォルダに `Microsoft.WindowsApp
 
 一度推論した画像はキャッシュに保存されます（キャッシュを削除する場合は `F5` キーを押してください）。
 
-> [!WARNING]
+> [!Warning]
 > 内部で画像を 518×518 にリサイズしてから推論を行うため、大きな画像では細かなディテールが失われることがあります。
 
-> [!WARNING]
+> [!Warning]
 > 動画にも適用できますが、フレーム間の一貫性は保証されません。
 
 ## パラメーター
@@ -56,21 +65,18 @@ v1.0.0 では `aviutl2.exe` と同階層のフォルダに `Microsoft.WindowsApp
 - Windows 11
 - MSVC 2026
 - Git
-- PowerShell v7 ※パスが通っており pwsh で起動できること。
+- PowerShell v7 ※パスが通っていて pwsh で起動できること。
 - [mise](https://mise.jdx.dev/)
 
 ### 手順
 
 ツールのインストールと OpenCV のビルド、モデルの ONNX 変換を行うため、あらかじめ 10GB 程度の空きが必要になります。
 
-1. 本リポジトリを任意の場所にクローンします。
+1. 本リポジトリを任意の場所にクローンします。submodule を含めるため、`--recursive` オプションを付ける必要があります
 
     ```shell
     git clone --recursive https://github.com/azurite581/AviUtl2-DepthMapFilter.git
     ```
-
-    > [!Note]
-    > submodule を含めるため、`--recursive` オプションを付ける必要があります。
 
 2. mise をアクティベートします。
 
@@ -80,7 +86,7 @@ v1.0.0 では `aviutl2.exe` と同階層のフォルダに `Microsoft.WindowsApp
     mise i
     ```
 
-3. mise の tasks でビルドします。成功すると `release` フォルダー下に `DepthMapFilter_v{version}.au2pkg.zip` が生成されます。
+4. mise の tasks でビルドします。成功すると `release` フォルダー下に `DepthMapFilter_v{version}.au2pkg.zip` が生成されます。
 
     ```shell
     mise run build
