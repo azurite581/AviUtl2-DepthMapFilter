@@ -32,6 +32,8 @@ jobs:
     - name: Build project
       run: |
         mise run build
+      env:
+        PYTHONUTF8: 1
 
     - name: Create release notes
       run: |

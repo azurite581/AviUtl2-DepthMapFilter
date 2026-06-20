@@ -3,7 +3,7 @@ cmake = "latest"
 "github:sevenc-nanashi/aviutl2-cli" = { version = "latest", bin = "au2.exe" }
 uv = "latest"
 ninja = "latest"
-python = "3.14"
+python = "3.13"
 
 [tasks.build_opencv]
 description = "Build OpenCV"
