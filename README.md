@@ -1,13 +1,15 @@
 # AviUtl2 DepthMapFilter
 
-<img src="https://img.shields.io/github/license/azurite581/AviUtl2-DepthMapFilter">
-<a href="https://github.com/azurite581/AviUtl2-DepthMapFilter/releases/latest" style="text-decoration: none;">
-<img src="https://img.shields.io/github/v/release/azurite581/AviUtl2-DepthMapFilter">
-</a>
-<a href="https://github.com/azurite581/AviUtl2-DepthMapFilter/releases/latest" style="text-decoration: none;">
-<img src="https://img.shields.io/github/downloads/azurite581/AviUtl2-DepthMapFilter/total">
-</a>
-<img src="https://img.shields.io/github/last-commit/azurite581/AviUtl2-DepthMapFilter">
+<p align="left">
+    <img src="https://img.shields.io/github/license/azurite581/AviUtl2-DepthMapFilter">
+    <a href="https://github.com/azurite581/AviUtl2-DepthMapFilter/releases/latest" style="text-decoration: none;">
+        <img src="https://img.shields.io/github/v/release/azurite581/AviUtl2-DepthMapFilter">
+    </a>
+    <a href="https://github.com/azurite581/AviUtl2-DepthMapFilter/releases/latest" style="text-decoration: none;">
+        <img src="https://img.shields.io/github/downloads/azurite581/AviUtl2-DepthMapFilter/total">
+    </a>
+    <img src="https://img.shields.io/github/last-commit/azurite581/AviUtl2-DepthMapFilter">
+</p>
 
 [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) を使って深度マップを生成する [AviUtl2](https://spring-fragrance.mints.ne.jp/aviutl/) のフィルタープラグインです。
 
