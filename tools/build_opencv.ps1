@@ -37,30 +37,35 @@ $cmakeArgs = @(
     "-DENABLE_LTO=ON",
     "-DWITH_IPP=OFF",
 
-    # Parallel processing
-    "-DWITH_PTHREADS_PF=OFF",
+    # Codec
+    "-DWITH_WEBP=OFF",
+    "-DBUILD_WEBP=OFF",
 
-    # Disable unnecessary backends
+    # Video
+    "-DWITH_V4L=OFF",
     "-DWITH_FFMPEG=OFF",
     "-DWITH_GSTREAMER=OFF",
+    "-DWITH_MSMF=OFF",
+    "-DWITH_DSHOW=OFF",
+    "-DWITH_AVFOUNDATION=OFF",
+    "-DWITH_ANDROID_MEDIANDK=OFF",
+    "-DVIDEOIO_ENABLE_PLUGINS=OFF",
+
+    # Parallel processing
+    "-DWITH_PTHREADS_PF=OFF",
+    "-DPARALLEL_ENABLE_PLUGINS=OFF",
+
+    # GUI
     "-DWITH_GTK=OFF",
     "-DWITH_QT=OFF",
     "-DWITH_WIN32UI=OFF",
-    "-DWITH_ANDROID_MEDIANDK=OFF",
+    "-DHIGHGUI_ENABLE_PLUGINS=OFF",
 
     # DNN
     "-DWITH_ONNXRUNTIME=ON",
     "-DOWNLOAD_ONNXRUNTIME=ON",
 
-    # Codec
-    "-DBUILD_ZLIB=ON",
-    "-DBUILD_JPEG=ON",
-    "-DBUILD_PNG=ON",
-    "-DBUILD_TIFF=ON",
-    "-DBUILD_WEBP=ON",
-    "-DBUILD_OPENJPEG=ON",
-
-    # Others
+    # Miscellaneous
     "-DBUILD_JAVA=OFF",
     "-DBUILD_FAT_JAVA_LIB=OFF",
     "-DBUILD_opencv_python3=OFF",
