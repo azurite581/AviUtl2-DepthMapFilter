@@ -20,5 +20,6 @@ if (-not (Test-Path "external/checkpoints/depth_anything_v2_vits.pth")) {
 # Export
 New-Item -ItemType Directory -Force -Path "model" | Out-Null
 
+$env:PYTHONUTF8 = "1"
 $env:PYTHONPATH = "external/Depth-Anything-V2"
 uv run python export.py
