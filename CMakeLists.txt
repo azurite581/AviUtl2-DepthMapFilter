@@ -28,6 +28,24 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 # OpenCV
 set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/opencv_build/opencv")
 find_package(OpenCV REQUIRED)
+
+# OpenCV 5.x (コミットハッシュ：6d2cd14bb21698e0582a4f8724986a3e63b54fa2) の CMakeLists.txt の不具合？により、
+# GitHub Actions の Windows 環境で OpenCV をソースビルドした場合、各ターゲットのリンク依存に $<LINK_ONLY:pthread> が混入する。
+# しかし Windows 環境には pthread.lib が存在しないため、LINK エラーになる。
+# 一時的な回避策として、あらかじめ該当プロパティから pthread を取り除いておく。
+foreach(_ocv_target opencv_core opencv_flann opencv_geometry opencv_imgproc opencv_dnn opencv_imgcodecs)
+  if(TARGET ${_ocv_target})
+    foreach(_prop INTERFACE_LINK_LIBRARIES IMPORTED_LINK_INTERFACE_LIBRARIES IMPORTED_LINK_INTERFACE_LIBRARIES_DEBUG IMPORTED_LINK_INTERFACE_LIBRARIES_RELEASE)
+      get_target_property(_libs ${_ocv_target} ${_prop})
+      if(_libs)
+        list(REMOVE_ITEM _libs "\$<LINK_ONLY:pthread>")
+        list(REMOVE_ITEM _libs "pthread")
+        set_target_properties(${_ocv_target} PROPERTIES ${_prop} "${_libs}")
+      endif()
+    endforeach()
+  endif()
+endforeach()
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
   opencv_dnn
   opencv_imgcodecs
