@@ -14,7 +14,7 @@
 [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) を使って深度マップを生成する [AviUtl2](https://spring-fragrance.mints.ne.jp/aviutl/) のフィルタープラグインです。
 
 ![DepthMapFilter](assets/DepthMapFilter.png)
-Image by <a href="https://pixabay.com/users/anselmo7511-43046719/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=9887875">Anselmo Rodrigues</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=9887875">Pixabay</a>
+Image by <a href="https://pixabay.com/users/ftanuki-802890/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=802286">ftanuki</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=802286">Pixabay</a>
 
 ## 動作環境
 
@@ -39,7 +39,7 @@ Image by <a href="https://pixabay.com/users/anselmo7511-43046719/?utm_source=lin
 
 #### v1.1.0 の変更点
 
-v1.0.0 では `aviutl2.exe` と同階層のフォルダに `Microsoft.WindowsAppRuntime.Bootstrap.dll` を配置する必要がありましたが、ライブラリの変更に伴い v1.1.0 で不要になりました。また、モデルの配置場所も変更したため、`Plugin` フォルダー下の `DepthMapFilter_model` フォルダーも不要になりました。これらは手動で削除していただく必要があります。
+v1.0.0 では `aviutl2.exe` と同階層のフォルダに `Microsoft.WindowsAppRuntime.Bootstrap.dll` を配置する必要がありましたが、v1.1.0 で不要になりました。また、モデルの配置場所も変更したため、`Plugin` フォルダー下の `DepthMapFilter_model` フォルダーも不要になりました。更新では自動的に削除されないため、手動で削除してください。
 
 ## 使い方
 
@@ -82,7 +82,7 @@ v1.0.0 では `aviutl2.exe` と同階層のフォルダに `Microsoft.WindowsApp
 
 2. mise をアクティベートします。
 
-3. 必要なツールをインストールします。インストールされるツールについては [mise.toml](mise.toml) の `[tools]` セクションを参照してください。
+3. mise で必要なツールをインストールします。インストールされるツールについては [mise.toml](mise.toml) の `[tools]` セクションを参照してください。
 
     ```shell
     mise i
